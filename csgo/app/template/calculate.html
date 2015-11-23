@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <center><h1>Calculator</h1></center>
+    <table class="table">
+        <tr>
+            <td><input ng-mousemove="check('dec1', 'bin1', 'hex1')" ng-click="changeD('ex')" ng-model="one" type="radio" name="group1"
+                       id="dec1" checked>Dec<br></td>
+            <td><input ng-mousemove="check('dec2', 'bin2', 'hex2')" ng-click="changeD('res')" type="radio" name="group2"
+                       id="dec2" checked>Dec<br></td>
+        </tr>
+        <tr>
+            <td><input ng-mousemove="check('dec1', 'bin1', 'hex1')" ng-click="changeB('ex')" type="radio" name="group1"
+                       id="bin1">Bin<br></td>
+            <td><input ng-mousemove="check('dec2', 'bin2', 'hex2')" ng-click="changeB('res')" type="radio" name="group2"
+                       id="bin2">Bin<br></td>
+        </tr>
+        <tr>
+            <td><input ng-mousemove="check('dec1', 'bin1', 'hex1')" ng-click="changeH('ex')" type="radio" name="group1"
+                       id="hex1">Hex<br></td>
+            <td><input ng-mousemove="check('dec2', 'bin2', 'hex2')" ng-click="changeH('res')" type="radio" name="group2"
+                       id="hex2">Hex<br></td>
+        <tr>
+            <td>Expression <input type="text" class="form-control my-input" name="expression" ng-model="ex" id="ex" ng-pattern="/^(\d+)(([+-/*()]?)(\d+))*[)]?$/"/>
+            </td>
+            <td>Result <input type="text" class="form-control" name="result" data-ng-model="res" id="res"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button class="btn btn-success" name="enter" ng-click="calc()" >
+                    Eval
+                </button>
+                <button class="btn btn-success" name="enter" value="load">
+                    Load File
+                </button>
+                <button class="btn btn-success" name="enter" value="save">
+                    Save File
+                </button>
+                <button class="btn btn-success" name="enter" value="insert">
+                    Database
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div ng-repeat="name in data">
+                    {{[$index + 1]}} {{name.ex}}  =  {{name.res}}
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
