@@ -1,5 +1,3 @@
-# PhoneCat App with LoftBlog
-
 Папка /bower_components и npm-server не включены в проект.
 
 **!!! ВНИМАНИЕ ВАЖНО !!!**
