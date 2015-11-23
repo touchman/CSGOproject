@@ -17,17 +17,15 @@ phonecatApp.config(['$routeProvider', '$locationProvider', function($routeProvid
         templateUrl:'template/startpage.html',
         controller:'StartCtrl'
       })
+      .when('/waiting', {
+        templateUrl:'template/waiting.html',
+        controller:'WaitCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
 }]);
 
-/* Filter */
-phonecatApp.filter('checkmark', function() {
-  return function(input) {
-    return input ? '\u2713' : '\u2718';
-  }
-});
 
 phonecatApp.controller('CsgoCtrl', ['$scope', '$http', function($scope, $http){
     $http.get('json/dataOut.json').success(function(data){
@@ -39,5 +37,8 @@ phonecatApp.controller('StartCtrl', ['$scope', '$http', function($scope, $http){
 
 }]);
 
+phonecatApp.controller('WaitCtrl', ['$scope', '$http', function($scope, $http){
+
+}]);
 
 
