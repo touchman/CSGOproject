@@ -1,6 +1,6 @@
 # CSGOproject
 
-To install backend dependenciesss:
+To install backend dependencies:
 
 $ npm install jsonfile --save
 
