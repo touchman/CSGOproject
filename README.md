@@ -1,11 +1,11 @@
 # CSGOproject
 
-установить в папку бэкэнда: 
+To install backend dependencies:
 
 $ npm install jsonfile --save
 
 $ npm install express
 
-запуск сервера:
+To start the server:
 
 $ node server
