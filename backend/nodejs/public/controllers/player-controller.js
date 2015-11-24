@@ -13,5 +13,5 @@ angular.module('statMaster', ['ui.services'])
 					   vm.players = data;
 				});
 		   	}
-}]);
 
+}]);
