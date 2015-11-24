@@ -6,13 +6,12 @@ angular.module('statMaster', ['ui.services'])
 		   	//Sets vm.players the data obtained from REST service
 		   	getPlayers();
 		   	
-		   	
 		   	/////////////////////
 		   	
 		   	function getPlayers() {
-		   			playerService.getPlayers().then(function(data) {
-					   	vm.players = data;
-					});
+		   		playerService.getPlayers().then(function(data) {
+					   vm.players = data;
+				});
 		   	}
 }]);
 
