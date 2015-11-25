@@ -5,7 +5,7 @@ module.exports = {
 
         res.sendFile('listen.html', {root: './public'});
 
-        console.log('i start to listen');
+        console.log('udp start thread');
 
         var dgram = require('dgram'),
             server = dgram.createSocket('udp4');
