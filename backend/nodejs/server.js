@@ -3,7 +3,6 @@ var app = express();
 var path = require('path');
 var server = require('./js/udpserver');
 var reader = require('./js/reader');
-var cmd = require('./js/cmd');
 
 app.use(express.static(__dirname + '/public'));
 

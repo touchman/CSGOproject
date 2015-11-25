@@ -6,6 +6,7 @@ module.exports = {
         res.sendFile('listen.html', {root: './public'});
 
         var cmd = require('./cmd');
+
         console.log('udp start thread');
 
         var dgram = require('dgram'),
@@ -28,79 +29,35 @@ module.exports = {
 
         var players;
 
-        var obj;
+        var obj = [];
 
-        var init = function(){
+        var init = function () {
             players = jsonfile.readFileSync(fileIn);
-            obj = [
-                {
-                    id: players[0].fullSteamId,
-                    name: players[0].name,
+            var length = Object.keys(players).length;
+
+            var index;
+            for (index = 0; index < length; ++index) {
+                obj.push({
+                    id: players[index].fullSteamId,
+                    name: players[index].name,
                     kills: 0,
-                    deaths: 0},
-                {
-                    id: players[1].fullSteamId,
-                    name: players[1].name,
-                    kills: 0,
-                    deaths: 0},
-                {
-                    id: players[2].fullSteamId,
-                    name: players[2].name,
-                    kills: 0,
-                    deaths: 0},
-                {
-                    id: players[3].fullSteamId,
-                    name: players[3].name,
-                    kills: 0,
-                    deaths: 0},
-                {
-                    id: players[4].fullSteamId,
-                    name: players[4].name,
-                    kills: 0,
-                    deaths: 0},
-                {
-                    id: players[5].fullSteamId,
-                    name: players[5].name,
-                    kills: 0,
-                    deaths: 0},
-                {
-                    id: players[6].fullSteamId,
-                    name: players[6].name,
-                    kills: 0,
-                    deaths: 0},
-                {
-                    id: players[7].fullSteamId,
-                    name: players[7].name,
-                    kills: 0,
-                    deaths: 0},
-                {
-                    id: players[8].fullSteamId,
-                    name: players[8].name,
-                    kills: 0,
-                    deaths: 0},
-                {
-                    id: players[9].fullSteamId,
-                    name: players[9].name,
-                    kills: 0,
-                    deaths: 0}
-            ];
-        }
+                    deaths: 0
+                })
+            }
+        };
 
         server.on('message', function (message, rinfo) {
-            var msg = message.toString('ascii').slice(5,-1);
+            var msg = message.toString('ascii').slice(5, -1);
             console.log(msg);
-            if(msg.indexOf("Match_Start") > -1){
+            if (msg.indexOf("Match_Start") > -1) {
                 cmd.serverAccess();
                 console.log("start match");
-                setTimeout(function(){
-                    init();
-                    console.log("writing log(match start)")
-                    write(msg)
-                }, 20000);
-            } else{
-                if(obj == null){
-                    init();
-                }
+                init();
+                console.log("writing log(match start)");
+                write(msg)
+
+            } else {
+                init();
                 console.log("writing log(during match)");
                 write(msg)
             }
@@ -111,7 +68,7 @@ module.exports = {
          console.log(obj["steamid1"].deaths);
          console.log(Object.keys(obj).length);
          */
-        var write = function(testLog){
+        var write = function (testLog) {
             var length = Object.keys(obj).length; // == 2
 
             var index;
@@ -119,16 +76,16 @@ module.exports = {
             for (index = 0; index < length; ++index) {
 
                 var steam = index; // steamid#
-                if(count == 2) break;              // we need to count only 2 times (kill and dead) and another circles doesn't matter
+                if (count == 2) break;              // we need to count only 2 times (kill and dead) and another circles doesn't matter
 
 
-                if(testLog.indexOf(obj[steam].id) > -1){
+                if (testLog.indexOf(obj[steam].id) > -1) {
 
-                    if(testLog.indexOf("killed") > -1){
-                        if(testLog.indexOf("killed") > testLog.indexOf(obj[steam].id)){
+                    if (testLog.indexOf("killed") > -1) {
+                        if (testLog.indexOf("killed") > testLog.indexOf(obj[steam].id)) {
                             obj[steam].kills++;
                             count++;
-                        } else{
+                        } else {
                             obj[steam].deaths++;
                             count++;
                         }
@@ -137,7 +94,7 @@ module.exports = {
 
             }
 
-            if(testLog.indexOf("Match_Start") > -1){
+            if (testLog.indexOf("Match_Start") > -1) {
                 var index2;
                 for (index2 = 0; index2 < length; ++index2) {
                     var steam2 = index2;
