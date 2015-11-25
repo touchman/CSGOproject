@@ -5,6 +5,7 @@ module.exports = {
 
         res.sendFile('listen.html', {root: './public'});
 
+        var cmd = require('./cmd');
         console.log('udp start thread');
 
         var dgram = require('dgram'),
@@ -25,65 +26,85 @@ module.exports = {
 
         var fileIn = 'data/dataIn.json';
 
-        var players = jsonfile.readFileSync(fileIn);
+        var players;
 
-        var obj = [
-            {
-                id: players[0].fullSteamId,
-                name: players[0].name,
-                kills: 0,
-                deaths: 0},
-            {
-                id: players[1].fullSteamId,
-                name: players[1].name,
-                kills: 0,
-                deaths: 0},
-            {
-                id: players[2].fullSteamId,
-                name: players[2].name,
-                kills: 0,
-                deaths: 0},
-            {
-                id: players[3].fullSteamId,
-                name: players[3].name,
-                kills: 0,
-                deaths: 0},
-            {
-                id: players[4].fullSteamId,
-                name: players[4].name,
-                kills: 0,
-                deaths: 0},
-            {
-                id: players[5].fullSteamId,
-                name: players[5].name,
-                kills: 0,
-                deaths: 0},
-            {
-                id: players[6].fullSteamId,
-                name: players[6].name,
-                kills: 0,
-                deaths: 0},
-            {
-                id: players[7].fullSteamId,
-                name: players[7].name,
-                kills: 0,
-                deaths: 0},
-            {
-                id: players[8].fullSteamId,
-                name: players[8].name,
-                kills: 0,
-                deaths: 0},
-            {
-                id: players[9].fullSteamId,
-                name: players[9].name,
-                kills: 0,
-                deaths: 0}
-        ];
+        var obj;
+
+        var init = function(){
+            players = jsonfile.readFileSync(fileIn);
+            obj = [
+                {
+                    id: players[0].fullSteamId,
+                    name: players[0].name,
+                    kills: 0,
+                    deaths: 0},
+                {
+                    id: players[1].fullSteamId,
+                    name: players[1].name,
+                    kills: 0,
+                    deaths: 0},
+                {
+                    id: players[2].fullSteamId,
+                    name: players[2].name,
+                    kills: 0,
+                    deaths: 0},
+                {
+                    id: players[3].fullSteamId,
+                    name: players[3].name,
+                    kills: 0,
+                    deaths: 0},
+                {
+                    id: players[4].fullSteamId,
+                    name: players[4].name,
+                    kills: 0,
+                    deaths: 0},
+                {
+                    id: players[5].fullSteamId,
+                    name: players[5].name,
+                    kills: 0,
+                    deaths: 0},
+                {
+                    id: players[6].fullSteamId,
+                    name: players[6].name,
+                    kills: 0,
+                    deaths: 0},
+                {
+                    id: players[7].fullSteamId,
+                    name: players[7].name,
+                    kills: 0,
+                    deaths: 0},
+                {
+                    id: players[8].fullSteamId,
+                    name: players[8].name,
+                    kills: 0,
+                    deaths: 0},
+                {
+                    id: players[9].fullSteamId,
+                    name: players[9].name,
+                    kills: 0,
+                    deaths: 0}
+            ];
+        }
 
         server.on('message', function (message, rinfo) {
             var msg = message.toString('ascii').slice(5,-1);
             console.log(msg);
-            write(msg)
+            if(msg.indexOf("Match_Start") > -1){
+                cmd.serverAccess();
+                console.log("start match");
+                setTimeout(function(){
+                    init();
+                    console.log("writing log(match start)")
+                    write(msg)
+                }, 20000);
+            } else{
+                if(obj == null){
+                    init();
+                }
+                console.log("writing log(during match)");
+                write(msg)
+            }
+
         });
         /*
          console.log(obj["steamid1"].kills);
