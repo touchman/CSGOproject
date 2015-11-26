@@ -2,7 +2,7 @@
 	'use strict';
 	
 	angular.module('ui.services', [])
-	  .service('playerService', ['$http', function($http) {
+	  .service('playerService', ['$http', function playerService($http) {
 		  return {
 			  getPlayers: getPlayers
 		  };
