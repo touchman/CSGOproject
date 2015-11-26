@@ -57,6 +57,7 @@ module.exports = {
                 write(msg)
 
             } else {
+                if(obj.length == 0)
                 init();
                 console.log("writing log(during match)");
                 write(msg)
