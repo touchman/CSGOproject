@@ -2,9 +2,7 @@
 	'use strict';
 	
 	angular.module('statMaster', ['ui.services'])
-		   .controller('PlayerController', ['playerService', PlayerController]);
-	
-			function PlayerController(playerService) {
+		   .controller('PlayerController', ['playerService', function PlayerController(playerService) {
 			   	var vm = this;
 			   	
 			   	//Sets vm.players the data obtained from REST service
@@ -17,5 +15,5 @@
 						   vm.players = data;
 					});
 			   	}
-			}	   	
+			}]);	   	
 })();
