@@ -7,7 +7,7 @@ var fs = require('fs');
 
 var mas = [];
 
-fs.readFileSync('csgolog.log').toString().split('\n').forEach(function (line) {
+fs.readFileSync('csgolog.txt').toString().split('\n').forEach(function (line) {
     console.log(line);
     line = new Buffer(line);
     console.log(line);
