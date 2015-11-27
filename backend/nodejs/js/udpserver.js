@@ -31,8 +31,6 @@ module.exports = {
 
         var obj = [];
 
-        var countOfInit = 0;
-
         var init = function () {
             players = jsonfile.readFileSync(fileIn);
             var length = Object.keys(players).length;
@@ -107,6 +105,7 @@ module.exports = {
 
             console.log(obj);
 
+            if(testLog.indexOf('scored "16"') > -1)           // write dataOut file only if match end
             jsonfile.writeFile(fileOut, obj, function (err) {
                 console.error(err)
             });
