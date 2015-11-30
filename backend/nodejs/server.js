@@ -18,7 +18,6 @@ app.get('/getstats', function(req, res){
 
 app.get('/listen', function(req,res){
     console.log("getting steam id");
-    //cmd.serverAccess();
 
     server.udpserver(req, res, path);
 

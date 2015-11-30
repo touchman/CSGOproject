@@ -39,6 +39,7 @@ server.on('message', function (message, rinfo) {
     var msg = message.toString('ascii');
     console.log(msg);
     if (msg.indexOf("Match_Start") > -1) {
+        cmd.serverAccess();                     // this is for full test
         console.log("start match");
         init();
         console.log("writing log(match start)");
