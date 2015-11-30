@@ -68,24 +68,39 @@ var write = function (testLog) {
 
             if (testLog.indexOf(obj[steam].id) > -1) {
 
-                if (testLog.indexOf("killed") > -1) {
-                    if (testLog.indexOf("killed") > testLog.indexOf(obj[steam].id)) {
+                var countCT = (testLog.match(/<CT>/g) || []).length;
+                var countT = (testLog.match(/<TERRORIST>/g) || []).length;
+
+                if (testLog.indexOf("killed") > testLog.indexOf(obj[steam].id)) {
+                    if (countCT == 1 || countT == 1) {
                         obj[steam].kills++;
                         count++;
-                    } else {
-                        obj[steam].deaths++;
+                    }
+                    if (countCT == 2 || countT == 2) {
+                        obj[steam].kills--;
                         count++;
                     }
+                } else {
+                    obj[steam].deaths++;
+                    count++;
                 }
             }
         }
-    } else {
-        if (testLog.indexOf("Match_Start") > -1) {
+    } else if (testLog.indexOf("Match_Start") > -1) {
             var index2;
             for (index2 = 0; index2 < length; ++index2) {
                 var steam2 = index2;
                 obj[steam2].kills = 0;
                 obj[steam2].deaths = 0;
+            }
+        } else if (testLog.indexOf("suicide") > -1) {
+        var i;
+        for (i = 0; i < length; ++i) {
+
+            var steam = i; // steamid#
+            if (testLog.indexOf(obj[steam].id) > -1) {
+                obj[steam].kills--;
+                obj[steam].deaths++;
             }
         }
     }

@@ -7,7 +7,7 @@ var fs = require('fs');
 
 var mas = [];
 
-fs.readFileSync('file.txt').toString().split('\n').forEach(function (line) {
+fs.readFileSync('csgo2.txt').toString().split('\n').forEach(function (line) {
     console.log(line);
     line = new Buffer(line);
     console.log(line);
