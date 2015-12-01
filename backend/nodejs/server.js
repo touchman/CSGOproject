@@ -3,8 +3,11 @@ var app = express();
 var path = require('path');
 var server = require('./js/udpserver');
 var reader = require('./js/reader');
+var mongojs = require('mongojs');
+var db = mongojs('contactlist',['contactlist']);
 
 app.use(express.static(__dirname + '/public'));
+
 
 app.get('/players', function(req,res){
     console.log('players request');

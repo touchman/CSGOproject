@@ -1,6 +1,8 @@
 var dgram = require('dgram'),
     server = dgram.createSocket('udp4');
 
+var cmd = require('../js/cmd');
+
 server.on('listening', function () {
     var address = server.address();
     console.log('UDP Server listening ' + address.address + ':' + address.port);
@@ -102,6 +104,7 @@ var write = function (testLog) {
             if (testLog.indexOf(obj[steam].id) > -1) {
                 obj[steam].kills--;
                 obj[steam].deaths++;
+                return;
             }
         }
     }
