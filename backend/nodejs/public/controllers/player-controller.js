@@ -1,19 +1,20 @@
-var statMaster = angular.module('statMaster', ['ui.services','ngRoute', 'ngResource']);
+var statMaster = angular.module('statMaster', ['ui.services', 'ngRoute', 'ngResource']);
 
-statMaster.controller('PlayerController', ['playerService','$location', '$routeParams', function(playerService, $location, $routeParams) {
-		   	console.log("Hello World from controller");
-		   	var vm = this;
-		   	
-		   	//Sets vm.players the data obtained from REST service
-		   	getPlayers($routeParams.matchId);
-		   	
-		   	////////////////////
+statMaster.controller('PlayerController', ['playerService', '$location', '$routeParams',   function (playerService, $location, $routeParams) {
+    console.log("Hello World from controller");
+    var vm = this;
 
-		   	function getPlayers(param) {
-		   		playerService.getPlayers(param).then(function(data) {
-					   vm.players = data;
-				});
-		   	}
+    //Sets vm.players the data obtained from REST service
+    getPlayers($routeParams.matchId);
+
+    ////////////////////
+
+    function getPlayers(param) {
+        playerService.getPlayers(param).then(function (data) {
+            vm.players = data;
+        });
+    }
+
 }]);
 
 statMaster.config(['$routeProvider', '$locationProvider', function ($routeProvide, $locationProvider) {
@@ -39,7 +40,7 @@ statMaster.config(['$routeProvider', '$locationProvider', function ($routeProvid
         });
 }]);
 
-statMaster.controller('MatchController', ['playerService','$location', '$routeParams',  function(playerService, $location, $routeParams) {
+statMaster.controller('MatchController', ['playerService', '$location', '$routeParams', '$http', function (playerService, $location, $routeParams, $http) {
     console.log("Hello World from controller");
     var vm = this;
 
@@ -49,16 +50,23 @@ statMaster.controller('MatchController', ['playerService','$location', '$routePa
     ////////////////////
 
     function getMatches(param) {
-        playerService.getMatches(param).then(function(data) {
+        playerService.getMatches(param).then(function (data) {
             vm.matches = data;
         });
     }
+
+    vm.remove = function (id) {
+        console.log(id);
+        $http.delete('/matches/' + id).success(function (response) {
+            getMatches($routeParams.matchId);
+        })
+    }
 }]);
 
-statMaster.controller('HomeController', ['playerService', function(playerService){
+statMaster.controller('HomeController', ['playerService', function (playerService) {
 
 }]);
 
-statMaster.controller('ListenController', ['playerService', function(playerService){
+statMaster.controller('ListenController', ['playerService', function (playerService) {
 
 }]);

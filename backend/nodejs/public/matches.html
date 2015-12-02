@@ -18,11 +18,9 @@
 		        </tr>
 		        </thead>
 		        <tbody>
-				<tr>
-					<button class="btn btn-danger" ng-click="get()">get</button>
-				</tr>
 		        <tr ng-repeat="match in vm.matches">
 		            <td><a href="#/match/{{match._id}}" >{{match._id}}</a> </td>
+					<td><button class="btn btn-danger" ng-click="vm.remove(match._id)">Remove</button> </td>
 		        </tr>
 		        </tbody>
 		    </table>

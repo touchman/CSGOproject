@@ -32,6 +32,14 @@ app.get('/match/:id', function (req, res) {
     )
 });
 
+app.delete('/matches/:id', function(req, res){
+    var id = req.params.id;
+    console.log(id);
+    db2.matches.remove({_id: mongojs.ObjectId(id)}, function(err, doc){
+        res.json(doc);
+    })
+});
+
 app.get('/getstats', function (req, res) {
     res.sendFile(path.join(__dirname + '/public/players.html'))
 });
