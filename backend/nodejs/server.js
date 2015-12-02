@@ -4,22 +4,39 @@ var path = require('path');
 var server = require('./js/udpserver');
 var reader = require('./js/reader');
 var mongojs = require('mongojs');
-var db = mongojs('contactlist',['contactlist']);
+var db = mongojs('contactlist', ['contactlist']);
+var db2 = mongojs('matches', ['matches']);
 
 app.use(express.static(__dirname + '/public'));
 
-
-app.get('/players', function(req,res){
+app.get('/players', function (req, res) {
     console.log('players request');
     reader.readfile(req, res);
 });
 
-app.get('/getstats', function(req, res){
+app.get('/matches/:id', function (req, res) {
+    console.log('matches request');
+    db2.matches.find({user: req.params.id},function (err, dock) {
+            console.log(dock);
+            res.json(dock)
+        }
+    )
+});
+
+app.get('/match/:id', function (req, res) {
+    console.log('match request');
+    db2.matches.find({_id: mongojs.ObjectId(req.params.id)},function (err, dock) {
+            console.log(dock);
+            res.json(dock)
+        }
+    )
+});
+
+app.get('/getstats', function (req, res) {
     res.sendFile(path.join(__dirname + '/public/players.html'))
-})
+});
 
-
-app.get('/listen', function(req,res){
+app.get('/listen', function (req, res) {
     console.log("getting steam id");
 
     server.udpserver(req, res, path);
