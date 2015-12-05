@@ -1,1 +1,0 @@
-java -jar data\steamMaster.jar "C:/stat.properties"

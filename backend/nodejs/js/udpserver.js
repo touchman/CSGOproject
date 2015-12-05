@@ -2,12 +2,12 @@ module.exports = {
     udpserver: function (req, res, path) {
 
         //res.sendFile(path.join(__dirname + '/public/listen.html'));
-
+        //res.sendFile('listen.html', {root: './public'});
 
         var mongojs = require('mongojs');
         var db2 = mongojs('matches', ['matches']);
 
-        res.sendFile('listen.html', {root: './public'});
+
 
         var cmd = require('./cmd');
 

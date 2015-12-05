@@ -57,7 +57,7 @@ server.on('message', function (message, rinfo) {
     console.log(msg);
     if (msg.indexOf("Match_Start") > -1) {
         map = msg.substr(msg.indexOf("Match_Start")+17, msg.length - (msg.indexOf("Match_Start")+19));
-        //cmd.serverAccess();                     // this is for full test
+        cmd.serverAccess();                     // this is for full test
         console.log("start match");
         init();
         console.log("writing log(match start)");
