@@ -1,13 +1,20 @@
 (function() {
 	'use strict';
 	
-	angular.module('statMaster', ['ui.services'])
-		   .controller('UserController', ['$http', function UserController($http) {
+	angular.module('statMaster.userController', [])
+		   .controller('UserController', ['$http', 'userService', function UserController($http, userService) {
 			   	var vm = this;
-						   	
-			   	/////////////////////
+					   	
 			   	
-			   	function saveUser() {
+			   	/////////////////////
+			   	this.submitForm = function(isValid) {			
+			   		if (isValid) {
+			   			console.log(vm.user);
+			   			userService.saveUser(vm.user).then(function(response) {
+				   			console.log(response);
+				   		});
+			   		}
 			   	}
+			   	
 			}]);	   	
 })();

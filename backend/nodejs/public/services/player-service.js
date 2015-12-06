@@ -1,16 +1,17 @@
 (function() {
 	'use strict';
 	
-	angular.module('ui.services', [])
-	  .service('playerService', ['$http', function playerService($http) {
+	angular.module('statMaster.playerService', [])
+	  .service('playerService', ['$http', 'appConfig', function playerService($http, appConfig) {
 		  return {
 			  getPlayers: getPlayers
 		  };
 		  
 		  function getPlayers() {
 			  
-			  return $http.get('/players')
-			  		.then(getPlayersComplete);
+			  //return $http.get('http://localhost:3000/players')
+			  return $http.get(appConfig.url + ':' + appConfig.port + '/players')
+			  		.then(getPlayersComplete).catch(getPlayersFailed);
 			  
 			  function getPlayersComplete(response) {
 				  return response.data;

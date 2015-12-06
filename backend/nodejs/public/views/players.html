@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Players</title>    		
+	</head>
+	<body>
+		<div class="container" ng-controller="PlayerController as vm">
+		    <h1>Players</h1>
+		    <table class="table table-striped">
+		        <thead>
+		        <tr>
+		            <th>steam</th>
+		            <th>name</th>
+		            <th>number</th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr ng-repeat="player in vm.players">
+		            <td>{{player.id}}</td>
+		            <td>{{player.name}}</td>
+		            <td>{{player.kills}}</td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</div>
+		
+		
+		
+	</body>
+</html>
