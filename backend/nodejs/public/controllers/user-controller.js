@@ -7,6 +7,12 @@
 					   	
 			   	
 			   	/////////////////////
+			   	this.authUser = function(user) {
+			   		userService.authUser(user).then(function(response) {
+			   			console.log(response);
+			   		});
+			   	}
+			   	
 			   	this.submitForm = function(isValid) {			
 			   		if (isValid) {
 			   			console.log(vm.user);

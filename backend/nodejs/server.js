@@ -33,27 +33,32 @@ var user = new UserSchema();
 //*********************Authentication REST*********************
 router.route('/authenticate') 
 	.post(function(req, res) {
-    UserSchema.findOne({steamID: req.body.steamID}, function(err, user) {
-        if (err) {
-            res.json({
-                type: false,
-                data: "Error occured: " + err
-            });
-        } else {
-            if (user) {
-               res.json({
-                    type: true,
-                    data: user,
-                    token: user.token
-                }); 
-            } else {
-                res.json({
-                    type: false,
-                    data: "Incorrect email/password"
-                });    
-            }
-        }
-    });
+		console.log(req.body);
+		
+	    UserSchema.findOne({name: req.body.name, password: req.body.password}, function(err, user) {
+	        if (err) {
+	            res.json({
+	                type: false,
+	                data: "Error occured: " + err
+	            });
+	        } else {
+	            if (user) {
+	            	user.token = jwt.sign(user, JWT_SECRET);
+	                user.save(function(err, user1) {
+	                    res.json({
+	                        type: true,
+	                        data: user1.steamID,
+	                        token: user1.token
+	                    });
+	                }); 
+	            } else {
+	                res.json({
+	                    type: false,
+	                    data: "Incorrect email/password"
+	                });    
+	            }
+	        }
+	    });
 });
 
 router.route('/signin')
@@ -66,6 +71,7 @@ router.route('/signin')
 					});
 				} else {
 					if (user) {
+						console.log('Request is ', req.headers);
 						res.json({
 							type: false,
 							data: "User already exists!"
@@ -78,14 +84,7 @@ router.route('/signin')
 						userModel.password = req.body.password;
 						userModel.save(function(err, user) {
 							console.log(user);
-							user.token = jwt.sign(user, JWT_SECRET);
-							user.save(function(err, user1) {
-								res.json({
-									type: true,
-									data: user1,
-									token: user1.token
-								});
-                    });
+							res.json({type: true});
 						})
 					}
 				}	
