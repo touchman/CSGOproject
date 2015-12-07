@@ -14,18 +14,20 @@
 				<br>
 				push it if u want to start udp server <br>
 				<br>
-				<a class="btn btn-default" href="/listen">Start UDP</a>
+				<a class="btn btn-default" href="" ng-click="goCats = !goCats; vm.getServer()">Start UDP</a>
+				<p ng-show="goCats"> Server has been started on : {{vm.udp.udp}}</p>
+
 			</p>
-		    <h1>Contact list</h1>
+		    <h2>Matches list</h2>
 		    <table class="table">
 		        <thead>
 		        <tr>
-		            <th>matches</th>
+		            <th>matches <button class="btn btn-default" ng-click="vm.refresh">Refresh</button></th>
 		        </tr>
 		        </thead>
 		        <tbody>
 		        <tr ng-repeat="match in vm.matches">
-		            <td><a href="#/match/{{match._id}}" >{{match.match[10].map}} {{match.match[10].date}}</a> </td>
+		            <td><a ng-href="#/match/{{match._id}}" >{{match.match[10].map}} {{match.match[10].date}}</a> </td>
 					<td><button class="btn btn-danger" ng-click="vm.remove(match._id)">Remove</button> </td>
 		        </tr>
 		        </tbody>

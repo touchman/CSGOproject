@@ -2,7 +2,8 @@ angular.module('ui.services', [])
     .service('playerService', ['$http', function ($http) {
         return {
             getPlayers: getPlayers,
-            getMatches: getMatches
+            getMatches: getMatches,
+            getUdp: getUdp
         };
 
         function getPlayers(param) {
@@ -30,8 +31,21 @@ angular.module('ui.services', [])
             }
 
             function getMatchesFailed(error) {
-                console.log('XHR Failed for getPlayers.' + error.data);
+                console.log('XHR Failed for getMatches.' + error.data);
+            }
+        };
+
+        function getUdp() {
+
+            return $http.get('/listen')
+                .then(getUdpComplete);
+
+            function getUdpComplete(response) {
+                return response.data;
             }
 
+            function getUdpFailed(error) {
+                console.log('XHR Failed for getMatches.' + error.data);
+            }
         };
     }]);

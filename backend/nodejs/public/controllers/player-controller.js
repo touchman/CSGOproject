@@ -1,8 +1,10 @@
 var statMaster = angular.module('statMaster', ['ui.services', 'ngRoute', 'ngResource']);
 
-statMaster.controller('PlayerController', ['playerService', '$location', '$routeParams',   function (playerService, $location, $routeParams) {
+statMaster.controller('PlayerController', ['playerService', '$location', '$routeParams', '$filter',  function (playerService, $location, $routeParams, $filter) {
     console.log("Hello World from controller");
     var vm = this;
+
+    var orderBy = $filter('orderBy');
 
     //Sets vm.players the data obtained from REST service
     getPlayers($routeParams.matchId);
@@ -11,8 +13,12 @@ statMaster.controller('PlayerController', ['playerService', '$location', '$route
 
     function getPlayers(param) {
         playerService.getPlayers(param).then(function (data) {
-            vm.players = data;
+            vm.players = data[0].match;
         });
+    }
+
+    vm.order = function(predicate, reverse){
+        vm.players = orderBy(vm.players, predicate, reverse);
     }
 
 }]);
@@ -26,10 +32,6 @@ statMaster.config(['$routeProvider', '$locationProvider', function ($routeProvid
         .when('/match/:matchId', {
             templateUrl: 'players.html',
             controller: 'PlayerController'
-        })
-        .when('/listen', {
-            templateUrl: 'listen.html',
-            controller: 'ListenController'
         })
         .when('/matches/:matchId', {
             templateUrl: 'matches.html',
@@ -58,8 +60,24 @@ statMaster.controller('MatchController', ['playerService', '$location', '$routeP
     vm.remove = function (id) {
         console.log(id);
         $http.delete('/matches/' + id).success(function (response) {
-            getMatches($routeParams.matchId);
+            vm.refresh();
         })
+    };
+
+    vm.refresh = function () {
+        getMatches($routeParams.matchId);
+    };
+
+    vm.getServer = function(){
+        getUdp();
+    };
+
+    ////////////////////
+
+    function getUdp() {
+        playerService.getUdp().then(function (data) {
+            vm.udp = data;
+        });
     }
 }]);
 
@@ -68,5 +86,4 @@ statMaster.controller('HomeController', ['playerService', function (playerServic
 }]);
 
 statMaster.controller('ListenController', ['playerService', function (playerService) {
-
 }]);

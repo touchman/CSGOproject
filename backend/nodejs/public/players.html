@@ -10,20 +10,22 @@
 	</head>
 	<body >
 		<div class="container" ng-controller="PlayerController as vm">
-		    <h1>Contact list</h1>
+		    <h2>Stats</h2>
 		    <table class="table">
 		        <thead>
 		        <tr>
-		            <th>name</th>
-		            <th>email</th>
-		            <th>number</th>
+		            <th><a href="" ng-click="reverse = false; vm.order('id', false)">steam_id</a></th>
+		            <th><a href="" ng-click="reverse = !reverse; vm.order('name', reverse)">name</a></th>
+		            <th><a href="" ng-click="reverse = !reverse; vm.order('kills', reverse)">kills</a></th>
+		            <th><a href="" ng-click="reverse = !reverse; vm.order('deaths', reverse)">deaths</a></th>
 		        </tr>
 		        </thead>
-		        <tbody>
-		        <tr ng-repeat="player in vm.players">
-		            <td>{{player._id}}</td>
-		            <td>{{player.user}}</td>
-		            <td>{{player.match}}</td>
+		        <tbody >
+		        <tr ng-repeat="match in vm.players">
+		            <td>{{match.id}}</td>
+		            <td>{{match.name}}</td>
+		            <td>{{match.kills}}</td>
+		            <td>{{match.deaths}}</td>
 		        </tr>
 		        </tbody>
 		    </table>
