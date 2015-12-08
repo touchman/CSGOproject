@@ -12,13 +12,13 @@
 			  console.log(user);
 			  
 			  return $http.post(appConfig.url + ':' + appConfig.port + '/api/authenticate', user)
-		  		.then(saveUserComplete).catch(saveUserFailed);
+		  		.then(authUserComplete).catch(authUserFailed);
 		  
-			  function saveUserComplete(response) {
+			  function authUserComplete(response) {
 				  return response;
 			  }
 			  
-			  function saveUserFailed(error) {
+			  function authUserFailed(error) {
 				  console.log('XHR Failed for authUser.' + error.data);
 			  }
 			  
