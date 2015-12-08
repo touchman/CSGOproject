@@ -112,8 +112,14 @@ function ensureAuthorized(req, res, next) {
     var bearerHeader = req.headers["authorization"];
     if (typeof bearerHeader !== 'undefined') {
         var bearer = bearerHeader.split(" ");
-        bearerToken = bearer[1];
-        req.token = bearerToken;
+        bearerToken = bearer[1];    
+        
+        var user = jwt.decode(bearerToken, JWT_SECRET);
+        console.log('obtained user', user);
+        //UserSchema().find();
+        
+        
+        console.log();
         next();
     } else {
         res.send(403);

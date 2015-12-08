@@ -10,7 +10,7 @@
 		  function getPlayers() {
 			  
 			  //return $http.get('http://localhost:3000/players')
-			  return $http.get(appConfig.url + ':' + appConfig.port + '/players')
+			  return $http.get(appConfig.url + ':' + appConfig.port + '/api/players')
 			  		.then(getPlayersComplete).catch(getPlayersFailed);
 			  
 			  function getPlayersComplete(response) {

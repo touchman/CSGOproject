@@ -20,10 +20,9 @@ angular.module('statMaster', ['statMaster.playerController', 'statMaster.playerS
 		    return {
 		        'request': function (config) {
 		            config.headers = config.headers || {};
-		            $localStorage.token = "It works!";
-		            if ($localStorage.token) {
+		            if ($localStorage.token) 
 		                config.headers.Authorization = 'Bearer ' + $localStorage.token;
-		            }
+		            
 		            return config;
 		        },
 		    };

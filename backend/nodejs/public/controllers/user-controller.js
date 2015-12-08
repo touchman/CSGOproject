@@ -7,6 +7,10 @@
 					   	
 			   	
 			   	/////////////////////
+			   	this.me = function() {
+			   		userService.me();
+			   	}
+			   	
 			   	this.authUser = function(user) {
 			   		userService.authUser(user).then(function(response) {
 			   			console.log(response);
