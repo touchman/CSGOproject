@@ -124,7 +124,7 @@ function ensureAuthorized(req, res, next) {
 
 //Sets routes
 router.use(function(req, res, next) {
-	console.log('Mongo REST');
+	console.log('Middleware');
 	
 	next();
 });
@@ -169,27 +169,36 @@ router.route('/users')
 		  
 });
 
-//Registers routes to application
-app.use('/api', router);
-
-
-//******************************************************
+//*********************File REST*********************
 
 //app.use(express.static(__dirname + '/public'))
+/*router.route('/user')
+.get(function(req, res) {
+	var user = faker.helpers.userCard();
+	user.avatar = faker.image.avatar();
+	
+	res.json(user);  
+});*/
 
-app.get('/players', function(req,res){
+router.route('/players')
+	.get(function(req, res) {
     console.log('players request');
     reader.readfile(req, res);
 });
 
-app.get('/getstats', function(req, res){
-    res.sendFile(path.join(__dirname + '/public/players.html'))
-})
-
-app.get('/listen', function(req,res){
-    server.udpserver(req, res, path)
+router.route('/stats')
+	  .get(function(req, res) {
+		  res.json({data: 'There should be statistics'});
 });
 
+router.route('/listen')
+	  .get(function(req, res) {
+		  server.udpserver(req, res, path)
+});
+
+
+//Registers routes to application
+app.use('/api', router);
 
 app.listen(3000);
 
