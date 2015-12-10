@@ -6,20 +6,42 @@
 		  return {
 			  saveUser: saveUser,
 			  authUser: authUser,
-			  me: me
+			  me: me,
+			  getToken: getToken,
+			  setCurrUser: setCurrUser,
+			  getCurrUser: getCurrUser,
+			  logOut: logOut
 		  };
 		  
-		  function me() {
-			  return $http.get(appConfig.url + ':' + appConfig.port + '/api/me')
-		  		.then(authUserComplete).catch(authUserFailed);
+		  function logOut() {
+			  $localStorage.$reset();
+		  }
 		  
-			  function authUserComplete(response) {
+		  function setCurrUser(user) {
+			  $localStorage.name = user.name;
+		  }
+		  
+		  function getCurrUser() {		  
+			  return $localStorage.name;
+		  }
+		  
+		  function getToken() {
+			  return $localStorage.token;
+		  }
+		  
+		  function me() {
+			  if ($localStorage.token) {
+				  return $http.get(appConfig.url + ':' + appConfig.port + '/api/me')
+			  		.then(ensureAuthUserComplete).catch(ensureAuthUserFailed);
+			  }
+		  
+			  function ensureAuthUserComplete(response) {
 				  console.log(response);
 				  
 				  return response;
 			  }
 			  
-			  function authUserFailed(error) {
+			  function ensureAuthUserFailed(error) {
 				  console.log('XHR Failed for authUser.' + error.data);
 			  } 
 		  }
@@ -32,7 +54,7 @@
 		  
 			  function authUserComplete(response) {
 				  $localStorage.token = response.data.token;
-				  
+				  		  
 				  console.log($localStorage.token);
 				  
 				  return response;

@@ -59,14 +59,22 @@
             <li><a href="#contact">Contact</a></li>
           </ul>
           <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" ng-model="vm.user.name" placeholder="name" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" ng-model="vm.user.password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success" ng-click="vm.authUser(vm.user)">Sign in</button>
-            <input type="button" class="btn btn-success" ng-click="vm.me()" value="Me"/>
+          	<div class="text-primary" ng-show="vm.getToken()">
+          		<div>Welcome, {{vm.getCurrUser()}}</div>
+				<div><input type="button" class="btn btn-primary" ng-click="vm.logOut()" value="Log out"/></div>
+          	</div>
+                 
+	        <div ng-show="!vm.getToken()">
+				<div class="form-group">
+			    	<input type="text" ng-model="vm.user.name" placeholder="name" class="form-control">	    	
+			    </div>      
+			    <div class="form-group">
+			    	<input type="password" ng-model="vm.user.password" placeholder="Password" class="form-control">
+			    </div>       
+			    
+		        <button type="submit" class="btn btn-success" ng-click="vm.authUser(vm.user)">Sign in</button>
+		        <input type="button" class="btn btn-success" ng-click="vm.me()" value="Me"/>
+	        </div>
           </form>
         </div><!--/.navbar-collapse -->
       </div>

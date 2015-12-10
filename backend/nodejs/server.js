@@ -43,7 +43,10 @@ router.route('/authenticate')
 	            });
 	        } else {
 	            if (user) {
-	            	user.token = jwt.sign(user, JWT_SECRET);
+	            	//There could be check whether token is expired or not
+	            	if (!user.token)
+	            		user.token = jwt.sign(user, JWT_SECRET);
+	            	
 	                user.save(function(err, user1) {
 	                    res.json({
 	                        type: true,
@@ -91,23 +94,9 @@ router.route('/signin')
 	  })
 });
 
-router.get('/me', ensureAuthorized, function(req, res) {
-	UserSchema.findOne({token: req.token}, function(err, user) {
-        if (err) {
-            res.json({
-                type: false,
-                data: "Error occured: " + err
-            });
-        } else {
-            res.json({
-                type: true,
-                data: user
-            });
-        }
-    });
-});
+router.get('/me', ensureAuthorized);
 
-function ensureAuthorized(req, res, next) {
+function ensureAuthorized(req, res) {
     var bearerToken;
     var bearerHeader = req.headers["authorization"];
     if (typeof bearerHeader !== 'undefined') {
@@ -116,13 +105,24 @@ function ensureAuthorized(req, res, next) {
         
         var user = jwt.decode(bearerToken, JWT_SECRET);
         console.log('obtained user', user);
-        //UserSchema().find();
         
+        UserSchema.findOne(user, function(err, user) {
+        	if (err) {
+                res.json({
+                    type: false,
+                    data: "Error occured: " + err
+                });
+            } else {
+                res.json({
+                    type: true,
+                    data: user
+                });
+            }
+        });
         
-        console.log();
-        next();
+        console.log('Success, loged in');
     } else {
-        res.send(403);
+        res.sendStatus(403);
     }
 }
 
