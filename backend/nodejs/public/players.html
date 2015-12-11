@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="statMaster">
+	<head>
+	    <meta charset="UTF-8">
+	    <title> Contact list</title>
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	
+	    <!-- Optional theme -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+	</head>
+	<body >
+		<div class="container" ng-controller="PlayerController as vm">
+		    <h2>Stats</h2>
+		    <table class="table">
+		        <thead>
+		        <tr>
+		            <th><a href="" ng-click="reverse = false; vm.order('id', false)">steam_id</a></th>
+		            <th><a href="" ng-click="reverse = !reverse; vm.order('name', reverse)">name</a></th>
+		            <th><a href="" ng-click="reverse = !reverse; vm.order('kills', reverse)">kills</a></th>
+		            <th><a href="" ng-click="reverse = !reverse; vm.order('deaths', reverse)">deaths</a></th>
+		        </tr>
+		        </thead>
+		        <tbody >
+		        <tr ng-repeat="match in vm.players">
+		            <td>{{match.id}}</td>
+		            <td>{{match.name}}</td>
+		            <td>{{match.kills}}</td>
+		            <td>{{match.deaths}}</td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</div>
+	</body>
+</html>

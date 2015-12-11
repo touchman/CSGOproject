@@ -12,6 +12,7 @@ var morgan 		= require("morgan");
 var mongoose 	= require('mongoose');
 var UserSchema 	= require('./js/models/user');
 
+app.use(express.static(__dirname + '/public'))
 
 //Only for testing 
 var faker = require('faker');
@@ -192,19 +193,43 @@ router.route('/players')
     reader.readfile(req, res);
 });
 
-router.route('/stats')
-	  .get(function(req, res) {
-		  res.json({data: 'There should be statistics'});
+app.get('/matches/:id', function (req, res) {
+    console.log('matches request');
+    db2.matches.find({user: req.params.id},function (err, dock) {
+            console.log(dock);
+            res.json(dock)
+        }
+    )
 });
 
-router.route('/listen')
-	  .get(function(req, res) {
-		  server.udpserver(req, res, path)
+app.get('/match/:id', function (req, res) {
+    console.log('match request');
+    db2.matches.find({_id: mongojs.ObjectId(req.params.id)},function (err, dock) {
+            console.log(dock);
+            res.json(dock)
+        }
+    )
 });
 
+app.delete('/matches/:id', function(req, res){
+    var id = req.params.id;
+    console.log(id);
+    db2.matches.remove({_id: mongojs.ObjectId(id)}, function(err, doc){
+        res.json(doc);
+    })
+});
 
-//Registers routes to application
-app.use('/api', router);
+app.get('/getstats', function (req, res) {
+    res.sendFile(path.join(__dirname + '/public/players.html'))
+});
+
+app.get('/listen', function (req, res) {
+    console.log("getting steam id");
+
+    server.udpserver(req, res, path);
+
+    console.log("listening for logs from server");
+});
 
 app.listen(3000);
 

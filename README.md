@@ -10,6 +10,8 @@ $ npm install mongoose
 
 $ npm install body-parser
 
+$ npm install sync-exec
+
 To start the server:
 
 $ node server
