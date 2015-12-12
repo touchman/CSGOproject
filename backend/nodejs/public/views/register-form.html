@@ -1,0 +1,29 @@
+<div ng-controller="UserController as vm">
+	    <form name="userForm" ng-submit="vm.submitForm(userForm.$valid)" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+		<table>
+			<tr>
+	            <td><label>Name</label></td>
+	        </tr>
+	        <tr>
+	            <td><input type="text" name="username" class="form-control" ng-model="vm.user.name" required placeholder="name" ng-minlength="3" ng-maxlength="8"></td>
+	            <td><p ng-show="userForm.username.$error.minlength" class="help-block">Name is too short.</p></td>
+  				<td><p ng-show="userForm.username.$error.maxlength" class="help-block">Name is too long.</p></td>
+			</tr>
+	        <tr>
+	            <td><label>SteamID</label></td>
+	        </tr>
+	        <tr>
+	            <td><input type="text" name="steamId" class="form-control" ng-model="vm.user.steamID" required placeholder="steam id"></td>
+	        </tr>
+	        <tr>
+	            <td><label>Password</label></td>
+	        </tr>
+	        <tr>    
+	            <td><input type="password" name="password" class="form-control" ng-model="vm.user.password" required placeholder="password"></td>
+	        </tr>
+	        <tr>
+	        	<td><button type="submit" class="btn btn-primary" ng-disabled="!userForm.$valid">Submit</button></td>
+	        </tr>
+        </table>
+    </form>
+</div>
