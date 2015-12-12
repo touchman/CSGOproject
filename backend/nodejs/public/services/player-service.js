@@ -9,7 +9,7 @@
 
             function getPlayers(param) {
 
-                //return $http.get('http://localhost:3000/players')
+                //return $http.get('http://localhost:3000//api/match/:id')
                 return $http.get(appConfig.url + ':' + appConfig.port + '/api/match/' + param)
                     .then(getPlayersComplete).catch(getPlayersFailed);
 

@@ -13,11 +13,11 @@ angular.module('statMaster', ['statMaster.playerController', 'statMaster.playerS
                 templateUrl: 'views/players.html'
             })
             .when('/match/:matchId', {
-                templateUrl: 'players.html',
+                templateUrl: 'views/players.html',
                 controller: 'PlayerController'
             })
             .when('/matches', {
-                templateUrl: 'matches.html',
+                templateUrl: 'views/matches.html',
                 controller: 'MatchController'
             }).
             otherwise({
