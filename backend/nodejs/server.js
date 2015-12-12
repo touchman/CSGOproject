@@ -32,8 +32,7 @@ var user = new UserSchema();
 
 
 //*********************Authentication REST*********************
-router.route('/authenticate') 
-	.post(function(req, res) {
+router.post('/authenticate', function(req, res) {
 		console.log(req.body);
 		
 	    UserSchema.findOne({name: req.body.name, password: req.body.password}, function(err, user) {
@@ -65,8 +64,7 @@ router.route('/authenticate')
 	    });
 });
 
-router.route('/signin')
-	  .post(function(req, res) {
+router.post('/signin', function(req, res) {
 		UserSchema.findOne({steamID: req.body.steamID}, function(err, user) {
 			if (err) {
 					res.json({
@@ -109,8 +107,7 @@ function getToken(requestHeaders) {
 	}
 }
 
-router.route('/matches')
-		.get(function(req, res) {
+router.get('/matches', function(req, res) {
 			var token = getToken(req.headers);
 
 			var currUser = jwt.decode(token, JWT_SECRET);
@@ -182,9 +179,8 @@ router.get('/', function(req, res) {
 	res.json({ message: 'MongoDB REST'});
 });
 
-router.route('/users/:user_name')
-	  //Gets a user by the name
-	  .get(function(req, res) {
+//Gets a user by the name
+router.get('/users/:user_name', function(req, res) {
 		  console.log(req.params.user_name);
 			UserSchema.find({name : req.params.user_name}, function(err, user) {
             if (err)
@@ -202,9 +198,8 @@ router.route('/users/:user_name')
 		res.json(user);  
 });*/
 
-router.route('/users')
-	  //Creates a user by post
-	  .post(function(req, res) {
+//Creates a user by post
+router.post('/users', function(req, res) {
 		  
 		  var user = new UserSchema();  
 		  user.name = req.body.name;
@@ -229,19 +224,16 @@ router.route('/users')
 	res.json(user);  
 });*/
 
-router.route('/players')
-	.get(function(req, res) {
+router.get('/players', function(req, res) {
     console.log('players request');
     reader.readfile(req, res);
 });
 
-router.route('/stats')
-	  .get(function(req, res) {
+router.get('/stats', function(req, res) {
 		  res.json({data: 'There should be statistics'});
 });
 
-router.route('/listen')
-	  .get(function(req, res) {
+router.get('/listen', function(req, res) {
 		  server.udpserver(req, res, path)
 });
 
