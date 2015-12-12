@@ -9,7 +9,9 @@
         "jsonwebtoken": "0.4.0",
 		"jsonfile": "latest",
 		"cors": "latest",
-		"sync-exec": "latest"
+		"sync-exec": "latest",
+        "faker": "latest",
+        "mongojs": "latest"
     },
     "engines": {
         "node": ">=0.10.0"

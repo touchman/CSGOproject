@@ -11,6 +11,7 @@ var morgan 		= require("morgan");
 //Includes 'mongoose' ORM for MongoDB 
 var mongoose 	= require('mongoose');
 var UserSchema 	= require('./js/models/user');
+var MatchSchema = require('./js/models/match');
 
 
 //Only for testing 
@@ -94,7 +95,49 @@ router.route('/signin')
 	  })
 });
 
-router.get('/me', ensureAuthorized);
+router.get('/me', ensureAuthorized)
+
+
+function getToken(requestHeaders) {
+	var bearerToken;
+	var bearerHeader = requestHeaders["authorization"];
+	if (typeof bearerHeader !== 'undefined') {
+		var bearer = bearerHeader.split(" ");
+		bearerToken = bearer[1];
+
+		return bearerToken;
+	}
+}
+
+router.route('/matches')
+		.get(function(req, res) {
+			var token = getToken(req.headers);
+
+			var currUser = jwt.decode(token, JWT_SECRET);
+
+			MatchSchema.find({steamID: currUser.steamID}, function(err, matches) {
+				console.log(currUser);
+			if (err) {
+				res.json({
+					type: false,
+					data: "Error occured: " + err
+				});
+			} else {
+				var data = {};
+				matches.forEach(function (match) {
+						data[match._id] = match;
+					console.log(match);
+				});
+
+				//console.log(data);
+				res.json({
+					type: true,
+					data: data
+				});
+			}
+
+		});
+});
 
 function ensureAuthorized(req, res) {
     var bearerToken;
@@ -201,6 +244,38 @@ router.route('/listen')
 	  .get(function(req, res) {
 		  server.udpserver(req, res, path)
 });
+
+router.get('/match/:id', function (req, res) {
+	console.log('match request');
+	console.log(req.params.id);
+
+	MatchSchema.find({_id: mongoose.Types.ObjectId(req.params.id)},function (err, dock) {
+			console.log(dock);
+			res.json(dock)
+		}
+	)
+});
+
+router.delete('/matches/:id', function(req, res){
+	var id = req.params.id;
+	console.log(id);
+	MatchSchema.remove({_id: mongoose.Types.ObjectId(id)}, function(err, doc){
+		res.json(doc);
+	})
+});
+/*
+
+router.get('/matches/', function (req, res) {
+	console.log('matches request');
+	MatchSchema.find({user: req.data},function (err, dock) {
+			console.log(dock);
+			res.json(dock)
+		}
+	)
+});
+
+
+*/
 
 
 //Registers routes to application

@@ -2,9 +2,10 @@ var dgram = require('dgram'),
     server = dgram.createSocket('udp4');
 
 var cmd = require('../js/cmd');
+var mongoose 	= require('mongoose');
 
-var mongojs = require('mongojs');
-var db2 = mongojs('matches', ['matches']);
+var MatchSchema = require('../js/models/match');
+mongoose.connect('mongodb://localhost:27017/my_database_name');
 
 server.on('listening', function () {
     var address = server.address();
@@ -23,13 +24,13 @@ var fileIn = 'data/dataIn.json';
 
 var players;
 
-var date = new Date();
+var date;
 
-var dataStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' at ' +  date.getHours() + ':' + date.getMinutes();
+var dataStr;
 
 var map;
 
-var user = "sally";
+var user = "STEAM_1:1:15805829";
 
 var obj = [];
 
@@ -39,6 +40,8 @@ var init = function () {
     players = jsonfile.readFileSync(fileIn);
     var length = Object.keys(players).length;
     obj = [];
+    date = new Date();
+    dataStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' at ' +  date.getHours() + ':' + date.getMinutes();
     var index;
     for (index = 0; index < length +1; ++index) {
         if(index < length){
@@ -164,13 +167,14 @@ var write = function (testLog) {
 
     //console.log(obj);
 
-/*    if (testLog.indexOf('scored "16"') > -1)           // write dataOut file only if match end
-        jsonfile.writeFile(fileOut, obj, function (err) {
-            console.error(err)
-        });*/
-
     if(testLog.indexOf('scored "16"') > -1)   {
-        //db2.matches.insert({user: user , match: obj});
+
+        var matchModel = new MatchSchema();
+        matchModel.steamID = user;
+        matchModel.match = obj;
+        matchModel.save(function(err, user) {
+            if(err) console.log(err);
+        });
         jsonfile.writeFile(fileOut, obj, function (err) {
             console.error(err)
         })
