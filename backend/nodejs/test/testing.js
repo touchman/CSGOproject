@@ -50,6 +50,7 @@ var init = function () {
                 name: players[index].name,
                 kills: 0,
                 deaths: 0,
+                hs: 0,
                 team: ""
             });
         } else
@@ -131,6 +132,8 @@ var write = function (testLog) {
                     if (countCT == 1 || countT == 1) {
                         obj[steam].kills++;
                         count++;
+                        if(testLog.indexOf("headshot") > -1)
+                            obj[steam].hs++;
                     }
                     if (countCT == 2 || countT == 2) {
                         obj[steam].kills--;
@@ -148,6 +151,7 @@ var write = function (testLog) {
                 var steam2 = index2;
                 obj[steam2].kills = 0;
                 obj[steam2].deaths = 0;
+                obj[steam2].hs = 0;
             }
         obj[10].scoreCT = 0;
         obj[10].scoreT = 0;
