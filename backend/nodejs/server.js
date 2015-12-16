@@ -12,6 +12,7 @@ var morgan 		= require("morgan");
 var mongoose 	= require('mongoose');
 var UserSchema 	= require('./js/models/user');
 var MatchSchema = require('./js/models/match');
+var ServerSchema = require('./js/models/server');
 
 
 //Only for testing 
@@ -132,7 +133,6 @@ router.get('/matches', function(req, res) {
 					data: data
 				});
 			}
-
 		});
 });
 
@@ -233,8 +233,82 @@ router.get('/stats', function(req, res) {
 		  res.json({data: 'There should be statistics'});
 });
 
-router.get('/listen', function(req, res) {
-		  server.udpserver(req, res, path)
+router.post('/server', function(req, res) {
+	console.log(req.body);
+
+	var token = getToken(req.headers);
+
+	var currUser = jwt.decode(token, JWT_SECRET);
+
+	ServerSchema.findOne({ip: req.body.ip, port: req.body.port, rcon: req.body.rcon}, function(err, user) {
+		if (err) {
+			console.log(err)
+		} else {
+			if (user) {
+				//There could be check whether token is expired or not
+				console.log("server already exists")
+			} else {
+				var serverModel = new ServerSchema();
+				serverModel.ip = req.body.ip;
+				serverModel.port = req.body.port;
+				serverModel.rcon = req.body.rcon;
+				serverModel.steamID = currUser.steamID;
+				serverModel.save(function(err) {
+					if(err) console.log(err);
+				});
+			}
+		}
+	});
+
+	//server.udpserver(req, res, ip, port, rcon)
+});
+
+router.post('/start', function(req, res){
+
+	console.log(req.body);
+
+	var token = getToken(req.headers);
+
+	var currUser = jwt.decode(token, JWT_SECRET);
+
+	server.udpserver(req, res, currUser.steamID);
+});
+
+
+
+router.get('/servers', function(req, res) {
+	var token = getToken(req.headers);
+
+	var currUser = jwt.decode(token, JWT_SECRET);
+
+	ServerSchema.find({steamID: currUser.steamID}, function(err, servers) {
+		if (err) {
+			res.json({
+				type: false,
+				data: "Error occured: " + err
+			});
+		} else {
+			var data = {};
+			servers.forEach(function (server) {
+				data[server._id] = server;
+				console.log(server);
+			});
+
+			//console.log(data);
+			res.json({
+				type: true,
+				data: data
+			});
+		}
+	});
+});
+
+router.delete('/server/:id', function(req, res){
+	var id = req.params.id;
+	console.log(id);
+	ServerSchema.remove({_id: mongoose.Types.ObjectId(id)}, function(err, doc){
+		res.json(doc);
+	})
 });
 
 router.get('/match/:id', function (req, res) {

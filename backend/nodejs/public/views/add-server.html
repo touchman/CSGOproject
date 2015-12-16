@@ -1,0 +1,26 @@
+<div class="container" ng-controller="ServerController as vm">
+    Rcon <input class="text" ng-model="server.rcon">
+    IP <input class="text" ng-model="server.ip">
+    Port <input class="text" ng-model="server.port">
+    <button class="btn btn-default" ng-click="vm.getServerInfo(server)">Add server</button>
+
+    <button class="btn btn-default" ng-click="vm.refresh()">refresh</button>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ip</th>
+            <th>port</th>
+            <th>rcon</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="server in vm.servers">
+            <td>{{server.ip}}</td>
+            <td>{{server.port}}</td>
+            <td>{{server.rcon}}</td>
+            <td><button class="btn btn-default" ng-click="vm.start(server)">Start</button></td>
+            <td><button class="btn btn-default" ng-click="vm.remove(server._id)">Remove</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div

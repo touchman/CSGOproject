@@ -15,7 +15,10 @@
 
             function getPlayers(param) {
                 playerService.getPlayers(param).then(function (data) {
-                    vm.players = data[0].match;
+                    vm.players = [];
+                    for (var i = 0; i < 10; i++) {
+                        vm.players.push(data[0].match[i]);
+                    }
                 });
             }
 
