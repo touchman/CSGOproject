@@ -18,9 +18,10 @@
             <td>{{server.ip}}</td>
             <td>{{server.port}}</td>
             <td>{{server.rcon}}</td>
-            <td><button class="btn btn-default" ng-click="vm.start(server)">Start</button></td>
+            <td><button class="btn btn-default" ng-click="vm.start(server); goCats = !goCats;">Start</button></td>
+            <td ng-show="goCats"> Server has been started on: {{vm.udp.udp}}</td>
             <td><button class="btn btn-default" ng-click="vm.remove(server._id)">Remove</button></td>
         </tr>
         </tbody>
     </table>
-</div
+</div>

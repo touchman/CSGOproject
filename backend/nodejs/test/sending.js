@@ -30,7 +30,7 @@ var index;
 for(index=0; index < mas.length; ++index){
     (function(index){
         setTimeout(function(){
-            client.send(mas[index], 0, mas[index].length, 1234, 'localhost', function(err) {
+            client.send(mas[index], 0, mas[index].length, 64249, 'localhost', function(err) {
                 console.log(err);
             });
         }, 10 * index);

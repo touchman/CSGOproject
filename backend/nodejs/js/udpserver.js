@@ -68,6 +68,7 @@ module.exports = {
                         scoreCT: 0,
                         firstHalf: ""})
             }
+            console.log(obj);
             isInit = true;
         };
 
@@ -83,7 +84,6 @@ module.exports = {
                 write(msg)
             } else {
                 //console.log("writing log(during match)");
-                //init();                    // for testing with full dataIn file
                 write(msg)
             }
 
@@ -102,20 +102,20 @@ module.exports = {
 
             if(testLog.indexOf('triggered') > -1 && isInit){
                 if(testLog.indexOf('Team "CT" triggered "SFUI') > -1){
-                    obj[10].scoreCT++;
+                    obj[length-1].scoreCT++;
                 } else if(testLog.indexOf('Team "TERRORIST" triggered "SFUI') > -1){
-                    obj[10].scoreT++;
+                    obj[length-1].scoreT++;
                 }
             }
 
 
             if(testLog.indexOf('switched') > -1 && isInit && isSwitched){
-                obj[10].firstHalf = "CT: "+  obj[10].scoreCT + " T: " + obj[10].scoreT;
-                var ct = obj[10].scoreCT;
-                var t = obj[10].scoreT;
+                obj[length-1].firstHalf = "CT: "+  obj[length-1].scoreCT + " T: " + obj[length-1].scoreT;
+                var ct = obj[length-1].scoreCT;
+                var t = obj[length-1].scoreT;
                 console.log('switched - ' + ct + ' ' + t);
-                obj[10].scoreCT = t;
-                obj[10].scoreT = ct;
+                obj[length-1].scoreCT = t;
+                obj[length-1].scoreT = ct;
                 isSwitched = false;
             }
 
@@ -161,8 +161,8 @@ module.exports = {
                     obj[steam2].deaths = 0;
                     obj[steam2].hs = 0;
                 }
-                obj[10].scoreCT = 0;
-                obj[10].scoreT = 0;
+                obj[length-1].scoreCT = 0;
+                obj[length-1].scoreT = 0;
                 isSwitched = true;
             } else if (testLog.indexOf("suicide") > -1) {
                 var i;
@@ -177,8 +177,6 @@ module.exports = {
                 }
             }
 
-            console.log(obj);
-
             if(testLog.indexOf('scored "16"') > -1)   {
 
                 var matchModel = new MatchSchema();
@@ -191,7 +189,6 @@ module.exports = {
                     console.error(err)
                 })
             }
-
         };
     }
 };
