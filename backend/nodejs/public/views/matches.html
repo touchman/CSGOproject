@@ -19,7 +19,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="match in vm.matches">
-            <td><a ng-href="#/match/{{match._id}}">{{match.match[10].map}} {{match.match[10].date}}</a></td>
+            <td><a ng-href="#/match/{{match._id}}">{{match.match[match.match.length-1].map}} {{match.match[match.match.length-1].date}}</a></td>
             <td>
                 <button class="btn btn-danger" ng-click="vm.remove(match._id)">Remove</button>
             </td>
