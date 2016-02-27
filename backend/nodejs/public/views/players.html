@@ -4,18 +4,18 @@
 	<table class="table">
 		<thead>
 		<tr>
-			<th><a href="" ng-click="reverse = false; vm.order('id', false)">steam_id</a></th>
 			<th><a href="" ng-click="reverse = !reverse; vm.order('name', reverse)">name</a></th>
-			<th><a href="" ng-click="reverse = !reverse; vm.order('kills', reverse)">kills</a></th>
-			<th><a href="" ng-click="reverse = !reverse; vm.order('deaths', reverse)">deaths</a></th>
+			<th><a href="" ng-click="reverse = !reverse; vm.order('kills', reverse)">KD</a></th>
+			<th><a href="" ng-click="reverse = !reverse; vm.order('deaths', reverse)">+/-</a></th>
+			<th><a href="" ng-click="reverse = !reverse; vm.order('hs', reverse)">HS</a></th>
 		</tr>
 		</thead>
 		<tbody >
-		<tr ng-repeat="match in vm.players">
-			<td>{{match.id}}</td>
+		<tr ng-repeat="match in vm.players | limitTo:10">
 			<td>{{match.name}}</td>
-			<td>{{match.kills}}</td>
-			<td>{{match.deaths}}</td>
+			<td>{{match.kills}} - {{match.deaths}}</td>
+			<td>{{match.kills - match.deaths}}</td>
+			<td>{{(match.hs*100)/match.kills | number:1}}%</td>
 		</tr>
 		</tbody>
 	</table>

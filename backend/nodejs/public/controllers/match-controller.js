@@ -29,16 +29,6 @@
                 getMatches();
             };
 
-            vm.getServer = function () {
-                getUdp();
-            };
-
             ////////////////////
-
-            function getUdp() {
-                matchService.getUdp().then(function (data) {
-                    vm.udp = data;
-                });
-            }
         }]);
 })();

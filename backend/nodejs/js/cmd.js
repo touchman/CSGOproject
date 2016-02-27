@@ -1,10 +1,11 @@
 module.exports = {
-    serverAccess: function(){
+    serverAccess: function(ip, port, rcon){
 
         var execSync = require('sync-exec');
         console.log("cmd thread");
 
-        execSync('cmd /c java -jar data/steamMaster.jar pracc123 144.76.18.36 20000');
+        execSync('cmd /c java -jar data/steamMaster.jar ' + rcon + ' ' + ip + ' ' + port);
 
+        console.log("cmd done");
     }
-}
+};
