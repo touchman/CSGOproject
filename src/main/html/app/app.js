@@ -7,13 +7,13 @@ angular.module('statMaster', ['statMaster.playerController', 'statMaster.playerS
     .config(['$routeProvider', '$httpProvider', '$locationProvider', function ($routeProvider, $httpProvider, $locationProvider) {
         $routeProvider
             .when('/register', {
-                templateUrl: 'views/register-form.html'
+                templateUrl: 'components/views/register-form.html'
             })
             .when('/players', {
                 templateUrl: 'views/players.html'
             })
             .when('/match/:matchId', {
-                templateUrl: 'views/players.html',
+                templateUrl: 'components/views/players.html',
                 controller: 'PlayerController'
             })
             .when('/server', {
@@ -21,7 +21,7 @@ angular.module('statMaster', ['statMaster.playerController', 'statMaster.playerS
                 controller: 'ServerController'
             })
             .when('/matches', {
-                templateUrl: 'views/matches.html',
+                templateUrl: 'components/views/matches.html',
                 controller: 'MatchController'
             }).
             otherwise({

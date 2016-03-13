@@ -1,18 +1,18 @@
 var express 	= require('express');
 var app 		= express();
 var path 		= require('path');
-var server 		= require('./js/udpserver');
-var reader 		= require('./js/reader');
+var server 		= require('./components/udpserver');
+var reader 		= require('./components/reader');
 var cors 		= require('cors');
 var bodyParser 	= require('body-parser');
 //Authentication dependencies
 var jwt 		= require('jsonwebtoken');
-var morgan 		= require("morgan");
+var morgan 		= require('morgan');
 //Includes 'mongoose' ORM for MongoDB 
 var mongoose 	= require('mongoose');
-var UserSchema 	= require('./js/models/user');
-var MatchSchema = require('./js/models/match');
-var ServerSchema = require('./js/models/server');
+var UserSchema 	= require('./components/models/user');
+var MatchSchema = require('./components/models/match');
+var ServerSchema = require('./components/models/server');
 
 
 //Only for testing 

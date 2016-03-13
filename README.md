@@ -1,17 +1,13 @@
-# CSGOproject
+# StatMaster
 
 To install backend dependencies:
 
-$ npm install jsonfile --save
+$ cd src/main/html
 
-$ npm install express
-
-$ npm install mongoose
-
-$ npm install body-parser
-
-$ npm install sync-exec
+$ npm install
 
 To start the server:
+
+$ cd src/main/html/backend
 
 $ node server
